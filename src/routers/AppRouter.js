@@ -1,23 +1,13 @@
 import React from 'react';
-import LogIn from '../components/LogIn'
+import LogIn from '../components/routes/LogIn'
 import { createBrowserHistory } from 'history'
 import { Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
+import Dashboard from '../components/routes/Dashboard'
+import Management from '../components/routes/Management'
 
 export const history = createBrowserHistory()
-
-const Dashboard = () => (
-  <div>
-    <p>welcome to your dashboard</p>
-  </div>
-)
-
-const Categories = () => (
-  <div>
-    <p>here are your categories</p>
-  </div>
-)
 
 const NotFoundPage = () => (
   <div>
@@ -33,7 +23,7 @@ class AppRouter extends React.Component {
 					<Switch>
             <PublicRoute path='/' component={LogIn} exact />
 						<PrivateRoute path='/dashboard' component={Dashboard} />
-						<PrivateRoute path='/categories' component={Categories} />
+						<PrivateRoute path='/categories' component={Management} />
 						<Route component={NotFoundPage} />
 					</Switch>
 				</div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { startLogIn } from '../actions/actions'
+import { startLogIn } from '../../actions/actions'
 
 const LogIn = ({ startLogIn }) => (
   <div>

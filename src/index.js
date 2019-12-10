@@ -6,7 +6,12 @@ import { login, logout } from './actions/actions'
 import AppRouter, { history } from './routers/AppRouter'
 import { Provider } from 'react-redux'
 
-const store  = configureStore()
+const store = configureStore()
+
+store.subscribe(() => {
+  console.log('store updated', store.getState())
+})
+
 const jsx = (
 	<Provider store={store}>
 		<AppRouter />
@@ -36,3 +41,5 @@ firebase.auth().onAuthStateChanged((user) => {
 		history.push('/')
 	}
 })
+
+export default store
