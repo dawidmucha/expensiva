@@ -1,5 +1,6 @@
 import React from 'react'
 import EditReceipt from './modals/EditReceipt'
+import RemoveReceipt from './modals/RemoveReceipt'
 
 class TransactionItem extends React.Component {
 	constructor(props) {
@@ -9,12 +10,17 @@ class TransactionItem extends React.Component {
 			...props,
 			transactionSum: 0,
 			summary: [],
-			isEditReceiptModalOpen: false
+			isEditReceiptModalOpen: false,
+			isRemoveReceiptModalOpen: false
 		}
 
 		this.calculateTransactionSum = this.calculateTransactionSum.bind(this)
+
 		this.openEditReceiptModal = this.openEditReceiptModal.bind(this)
 		this.closeEditReceiptModal = this.closeEditReceiptModal.bind(this)
+
+		this.openRemoveReceiptModal = this.openRemoveReceiptModal.bind(this)
+		this.closeRemoveReceiptModal = this.closeRemoveReceiptModal.bind(this)
 	}
 	
 	componentDidMount() {
@@ -27,6 +33,14 @@ class TransactionItem extends React.Component {
 
 	closeEditReceiptModal() {
 		this.setState({ isEditReceiptModalOpen: false })
+	}
+
+	openRemoveReceiptModal() {
+		this.setState({ isRemoveReceiptModalOpen: true })
+	}
+
+	closeRemoveReceiptModal() {
+		this.setState({ isRemoveReceiptModalOpen: false })
 	}
 
 	calculateTransactionSum() {
@@ -43,13 +57,15 @@ class TransactionItem extends React.Component {
 	}
 
 	render() {
-
-
 		return (
 			<div>
-				{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' + this.state.transactionSum } <button onClick={this.openEditReceiptModal}>EDIT</button> <br />
+				{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' + this.state.transactionSum } 
+				<button onClick={this.openEditReceiptModal}>EDIT</button>
+				<button onClick={this.openRemoveReceiptModal}>REMOVE</button><br />
 				{ this.state.summary.join(', ') }
+
 				<EditReceipt isOpen={this.state.isEditReceiptModalOpen} onRequestClose={this.closeEditReceiptModal} {...this.props} sum={this.state.transactionSum} />
+				<RemoveReceipt isOpen={this.state.isRemoveReceiptModalOpen} onRequestClose={this.closeRemoveReceiptModal} id={this.state.id} close={this.closeRemoveReceiptModal} />
 			</div>
 		)
 	}

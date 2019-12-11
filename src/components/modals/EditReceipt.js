@@ -13,7 +13,7 @@ class EditReceipt extends React.Component {
 		this.closeAddReceiptItemModal = this.closeAddReceiptItemModal.bind(this)
 
 		this.state = {
-			...this.props,
+			...props,
 			isAddReceiptItemModalOpen: false
 		}
 	}
@@ -25,10 +25,6 @@ class EditReceipt extends React.Component {
 	closeAddReceiptItemModal() {
 		this.setState({ isAddReceiptItemModalOpen: false })
 	}
-
-	// async removeItem(id) {
-	// 	await database.ref(`${store.getState().uID || localStorage.getItem('uID')}/transactions/${this.props.receiptId}/items/${id}`).remove()
-	// }
 	
 	handleAddItem() {
 		this.openAddReceiptItemModal()

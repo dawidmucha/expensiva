@@ -23,8 +23,8 @@ class Transactions extends React.Component {
 		database.ref(`${store.getState().uid}/transactions`).orderByChild('date').on('value', (snapshot) => {
 			this.setState({ transactions: [] })
 			
-			Object.keys(snapshot.val()).map(el => {
-				const transaction = snapshot.val()[el]
+			Object.keys(snapshot.val()).map(el => { // el = id
+				const transaction = [el, snapshot.val()[el]]
 
 				return this.setState(state => {
 					return {
@@ -39,7 +39,7 @@ class Transactions extends React.Component {
 		const transactionEls = this.state.transactions.map((el, i) => {
 			return (
 				<li key={i}>
-					<TransactionItem key={i} {...el} pussy={i}  /> 
+					<TransactionItem key={i} {...el[1]} id={el[0]}  /> 
 				</li>
 			)
 		})
