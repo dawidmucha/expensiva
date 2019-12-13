@@ -31,8 +31,7 @@ class EditReceipt extends React.Component {
 	}
 
 	render() {
-		const items = Object.values(this.state.items || []).map((el, i) => {
-			
+		const items = Object.values(this.state.items || []).map((el, i) => {	
 			return (
 				<li key={i}>
 					{el.name} ({el.category}/{el.subcat}) <button>X</button><br />
