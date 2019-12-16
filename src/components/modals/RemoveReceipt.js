@@ -22,7 +22,6 @@ class RemoveReceipt extends React.Component {
 	}
 
 	removeReceipt(id) {
-		console.log(`about to remove ${id} yall`)
 		database.ref(`${store.getState().uid}/transactions/${id}`).remove()
 		this.closeRemoveReceiptItemModal()
 	}

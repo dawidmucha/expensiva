@@ -8,20 +8,27 @@ class Transactions extends React.Component {
 		super(props)
 
 		this.state = {
-			transactions: [],
-			boo: 'hoo'
+			transactions: []
 		}
 
 		this.fetchTransactions = this.fetchTransactions.bind(this)
+		this.refreshData = this.refreshData.bind(this)
 	}
 
 	componentDidMount() {
 		this.fetchTransactions()
 	}
 
+	refreshData() {
+		this.fetchTransactions()
+	}
+
 	fetchTransactions() {
 		database.ref(`${store.getState().uid}/transactions`).orderByChild('date').on('value', (snapshot) => {
-			this.setState({ transactions: [] })
+			this.setState({ 
+				transactions: [],
+				itemCounter: 0
+			})
 			
 			Object.keys(snapshot.val()).map(el => { // el = id
 				const transaction = [el, snapshot.val()[el]]
@@ -39,7 +46,7 @@ class Transactions extends React.Component {
 		const transactionEls = this.state.transactions.map((el, i) => {
 			return (
 				<li key={i}>
-					<TransactionItem key={i} {...el[1]} id={el[0]}  /> 
+					<TransactionItem key={i} {...el[1]} id={el[0]} refreshData={this.refreshData}  /> 
 				</li>
 			)
 		})

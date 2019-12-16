@@ -15,6 +15,7 @@ class TransactionItem extends React.Component {
 		}
 
 		this.calculateTransactionSum = this.calculateTransactionSum.bind(this)
+		this.refreshData = this.refreshData.bind(this)
 
 		this.openEditReceiptModal = this.openEditReceiptModal.bind(this)
 		this.closeEditReceiptModal = this.closeEditReceiptModal.bind(this)
@@ -43,13 +44,22 @@ class TransactionItem extends React.Component {
 		this.setState({ isRemoveReceiptModalOpen: false })
 	}
 
+	async refreshData() {
+		this.props.refreshData()
+	}
+
 	calculateTransactionSum() {
+		this.setState({  
+			transactionSum: 0,
+			summary: []
+		})
+		
 		for(let [, value] of Object.entries(this.state.items || [])) {
 			this.setState(state => {
 				state.summary.push(value.name)
 
 				return {
-					transactionSum: parseInt(state.transactionSum, 10) + parseInt(value.price, 10),
+					transactionSum: parseInt(state.transactionSum, 10) + parseInt(value.price, 10) * parseInt(value.amount, 10),
 					summary: state.summary
 				}
 			})
@@ -64,7 +74,7 @@ class TransactionItem extends React.Component {
 				<button onClick={this.openRemoveReceiptModal}>REMOVE</button><br />
 				{ this.state.summary.join(', ') }
 
-				<EditReceipt isOpen={this.state.isEditReceiptModalOpen} onRequestClose={this.closeEditReceiptModal} {...this.props} sum={this.state.transactionSum} />
+				<EditReceipt isOpen={this.state.isEditReceiptModalOpen} onRequestClose={this.closeEditReceiptModal} {...this.props} sum={this.state.transactionSum} refreshData={this.refreshData} />
 				<RemoveReceipt isOpen={this.state.isRemoveReceiptModalOpen} onRequestClose={this.closeRemoveReceiptModal} id={this.state.id} close={this.closeRemoveReceiptModal} />
 			</div>
 		)

@@ -1,6 +1,8 @@
 import React from 'react'
 import Modal from 'react-modal'
 import AddReceiptItem from './AddReceiptItem'
+import database from '../../firebase/firebase'
+import store from '../../index'
 
 Modal.setAppElement('#root')
 
@@ -11,6 +13,8 @@ class EditReceipt extends React.Component {
 		this.handleAddItem = this.handleAddItem.bind(this)
 		this.openAddReceiptItemModal = this.openAddReceiptItemModal.bind(this)
 		this.closeAddReceiptItemModal = this.closeAddReceiptItemModal.bind(this)
+		this.refreshData = this.refreshData.bind(this)
+		this.handleRemoveItem = this.handleRemoveItem.bind(this)
 
 		this.state = {
 			...props,
@@ -30,12 +34,21 @@ class EditReceipt extends React.Component {
 		this.openAddReceiptItemModal()
 	}
 
+	async handleRemoveItem(id) {
+		await database.ref(`${store.getState().uid}/transactions/${this.props.id}/items/${id}`).remove()
+		this.refreshData()
+	}
+
+	refreshData() {
+		this.props.refreshData()
+	}
+
 	render() {
-		const items = Object.values(this.state.items || []).map((el, i) => {	
+		const items = Object.entries(this.state.items || []).map((el, i) => {	
 			return (
 				<li key={i}>
-					{el.name} ({el.category}/{el.subcat}) <button>X</button><br />
-					{el.amount}x{el.price}zł
+					{el[1].name} ({el[1].category}/{el[1].subcat}) <button onClick={() => this.handleRemoveItem(el[0])}>X</button><br />
+					{el[1].amount}x{el[1].price}zł
 				</li>
 			)
 		})
@@ -50,7 +63,7 @@ class EditReceipt extends React.Component {
 						<li key={'add'}><button onClick={this.handleAddItem}>ADD</button></li>
 					</ul>
 
-					<AddReceiptItem isOpen={this.state.isAddReceiptItemModalOpen} onRequestClose={this.closeAddReceiptItemModal} />
+					<AddReceiptItem isOpen={this.state.isAddReceiptItemModalOpen} onRequestClose={this.closeAddReceiptItemModal} id={this.props.id} refreshData={this.refreshData} />
 				</div>
 			</Modal>
 		)

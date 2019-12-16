@@ -4,7 +4,6 @@ import Select from 'react-select'
 import database from '../../firebase/firebase'
 import store from '../../index'
 import uuidv4 from 'uuid/v4'
-import moment from 'moment'
 
 Modal.setAppElement('#root')
 
@@ -16,6 +15,7 @@ class AddReceiptItem extends React.Component {
 		this.handleSelectCategoryChange = this.handleSelectCategoryChange.bind(this)
 		this.handleSelectSubcatChange = this.handleSelectSubcatChange.bind(this)
 		this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
+		this.handleAddReceiptItem = this.handleAddReceiptItem.bind(this)
 		this.fetchCategories = this.fetchCategories.bind(this)
 
 		this.state = {
@@ -45,12 +45,12 @@ class AddReceiptItem extends React.Component {
 
 		database.ref(`${store.getState().uid}/categories`).on('value', snapshot => {
 			Object.keys(snapshot.val()).map(el => {
-				categories.push({ value: 'category', label: el })
+				return categories.push({ value: 'category', label: el })
 			})
 	
 			if(category) {
 				snapshot.val()[category].map(el => {
-					subcats.push({ value: 'subcat', label: el })
+					return subcats.push({ value: 'subcat', label: el })
 				})
 			}
 
@@ -59,7 +59,6 @@ class AddReceiptItem extends React.Component {
 				subcats
 			})
 		})
-
 	}
 
 	handleChange(e) {
@@ -67,7 +66,6 @@ class AddReceiptItem extends React.Component {
 	}
 
 	handleSelectCategoryChange(e) {
-		console.log(e)
 		this.fetchCategories(e.label)
 		this.setState({ [e.value]: e.label })
 	}
@@ -80,6 +78,28 @@ class AddReceiptItem extends React.Component {
 		this.setState(state => ({
 			isDiscount: !state.isDiscount 
 		}))
+	}
+
+	async handleAddReceiptItem() {
+		this.setState({ id: uuidv4() })
+		
+		if(this.state.name && this.state.price && this.state.category && this.state.subcat) {
+			await database.ref(`${store.getState().uid}/transactions/${this.props.id}/items`).push({ 
+				name: this.state.name,
+				amount: this.state.amount || 1,
+				volume: this.state.volume || 1,
+				volSfx: this.state.volSfx,
+				price: this.state.price,
+				isDiscount: this.state.isDiscount || false,
+				category: this.state.category,
+				subcat: this.state.subcat,
+			}).once('child_added', () => {
+				return this.props.refreshData
+			})
+			this.setState({ errorMessage: '' })
+		} else this.setState({ errorMessage: 'Fill all required fields!' })
+
+		this.props.refreshData()
 	}
 
 	render() {
