@@ -18,8 +18,27 @@ class EditReceipt extends React.Component {
 
 		this.state = {
 			...props,
+
+			affix: undefined,
+			currency: undefined,
+			volume: undefined,
+			weight: undefined,
+
 			isAddReceiptItemModalOpen: false
 		}
+	}
+
+	componentDidMount() {
+		database.ref(`${store.getState().uid}/settings`).on('value', snapshot => {
+			this.setState(() => {
+				return { 
+					affix: snapshot.val().affix,
+					currency: snapshot.val().currency,
+					volume: snapshot.val().volume,
+					weight: snapshot.val().weight
+				}
+			})
+		})
 	}
 	
 	openAddReceiptItemModal() {
@@ -47,8 +66,9 @@ class EditReceipt extends React.Component {
 		const items = Object.entries(this.state.items || []).map((el, i) => {	
 			return (
 				<li key={i}>
-					{el[1].name} ({el[1].category}/{el[1].subcat}) <button onClick={() => this.handleRemoveItem(el[0])}>X</button><br />
-					{el[1].amount}x{el[1].price}zł
+					{el[1].name} - {el[1].amount}{el[1].amoSfx === 'sol' ? this.state.volume : this.state.weight} - ({el[1].category}/{el[1].subcat}) <button onClick={() => this.handleRemoveItem(el[0])}>X</button><br />
+					{(this.state.affix === 'prefix' ? this.state.currency : '') +el[1].price + (this.state.affix === 'suffix' ? this.state.currency : '')
+					} ({el[1].units}x{el[1].price/el[1].units})
 				</li>
 			)
 		})
@@ -59,7 +79,7 @@ class EditReceipt extends React.Component {
 					<h1>{this.state.shop} - {this.state.sum}</h1>
 					<h3>{this.state.date} @ {this.state.time}</h3>
 					<ul>
-						{items || "not much"}
+						{items || "no items"}
 						<li key={'add'}><button onClick={this.handleAddItem}>ADD</button></li>
 					</ul>
 

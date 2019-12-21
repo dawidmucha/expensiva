@@ -31,6 +31,7 @@ class Settings extends React.Component {
 			avatar: undefined,
 			affix: undefined,
 			isSettingsFetched: false,
+			size: 50,
 
 			status: ''
 		}
@@ -72,9 +73,14 @@ class Settings extends React.Component {
 			})
 		} else if(!this.props.isOpen && this.state.isSettingsFetched) {
 			this.setState((state) => {
-				return { isSettingsFetched: false }
+				return { 
+					isSettingsFetched: false,
+					status: ''
+				}
 			})
 		}
+
+		
 	}
 	
 	async fetchSettings() {
@@ -181,7 +187,7 @@ class Settings extends React.Component {
 		database.ref(`${localStorage.getItem('uID')}/`).on('value', snapshot => {
 			firebase.auth().onAuthStateChanged(async (user) => {
 				const string = JSON.stringify(snapshot.val())
-				const blob = new Blob([string], {type: "text/plain;charset=utf-8"})
+				const blob = new Blob([string], {type: "application/json"})
 				console.log('exporting...', string)
 
 				saveAs(blob, `${user.displayName} export`)
@@ -193,18 +199,22 @@ class Settings extends React.Component {
 		let currencies = []
 		
 		await fetch('https://restcountries.eu/rest/v2/all').then(response => response.json()).then(json => {
-			json.map(el => {
+			json.filter(el => {
+				return (el.currencies[0].code && !!el.currencies[0].code.match(/[A-Z]{3}/))
+			}).map(el => { 
 				currencies.push({ label: el.currencies[0].code || el.currencies[0].symbol, value: el.currencies[0].symbol || el.currencies[0].code })
 			})
 		})
 
-		this.setState(state => ({
-			currencyList: _.uniqBy(currencies, 'label')
+		await this.setState(state => ({
+			currencyList: _.uniqBy(currencies, 'label').sort((a, b) => {
+				return a.label > b.label ? 1 : a.label < b.label ? -1 : 0
+			})
 		}))
 	}
 
 	saveChanges() {
-		database.ref(`${localStorage.getItem('uID')}/settings/`).set({
+		database.ref(`${store.getState().uid}/settings/`).set({
 			currency: this.state.currency || null, 
 			dateFormat: this.state.dateFormat || null, 
 			weight: this.state.weight || null, 
@@ -213,33 +223,34 @@ class Settings extends React.Component {
 			avatar: this.state.avatar || null,
 			affix: this.state.affix || null
 		})
+		this.setState({ status: 'settings saved!' })
 
-		firebase.auth().onAuthStateChanged(async (user) => {
-			if (user) {
-				if(this.refUsername.current.value) {
-					await user.updateProfile({
-						displayName: this.refUsername.current.value
-					}).then(() => console.log('username updated!'))
-				}
+		// firebase.auth().onAuthStateChanged(async (user) => {
+		// 	if (user) {
+		// 		if(this.refUsername.current.value) {
+		// 			await user.updateProfile({
+		// 				displayName: this.refUsername.current.value
+		// 			}).then(() => console.log('username updated!'))
+		// 		}
 
-				if(this.refEmail.current.value){
-					await user.updateEmail(this.refEmail.current.value).then(() => console.log('email updated'))
-				}
+		// 		if(this.refEmail.current.value){
+		// 			await user.updateEmail(this.refEmail.current.value).then(() => console.log('email updated'))
+		// 		}
 
-				if(this.refPassword.current.value){
-					await user.updatePassword(this.refPassword.current.value).then(() => console.log('password updated'))
-				}
+		// 		if(this.refPassword.current.value){
+		// 			await user.updatePassword(this.refPassword.current.value).then(() => console.log('password updated'))
+		// 		}
 
-				console.log(user.displayName, user.email)
-			}
-		})
+		// 		console.log(user.displayName, user.email)
+		// 	}
+		// })
 	}
 
 
 	render() {
 		return (
 			<Modal {...this.props} >
-				<h3>change personal informaiton</h3>
+				{/* <h3>change personal informaiton</h3>
 					
 				<div>username:</div>
 				<input ref={this.refUsername} type="text" onChange={this.handleCredentials}/>
@@ -248,10 +259,7 @@ class Settings extends React.Component {
 				<input ref={this.refEmail} type="text" onChange={this.handleCredentials}/>
 				
 				<div>password:</div>
-				<input ref={this.refPassword} type="password" onChange={this.handleCredentials}/>
-				
-				<button>delete account</button>
-				<button onClick={this.handleDataExport}>export data</button>	
+				<input ref={this.refPassword} type="password" onChange={this.handleCredentials}/>  */}
 				
 				<h3>preferences</h3>
 				
@@ -276,11 +284,13 @@ class Settings extends React.Component {
 
 				<div>volume</div>
 				<input ref={this.refVolumeL} type="radio" name="volume" value="l" onChange={this.handleChange}/>l
-				<input ref={this.refVolumeOz}  type="radio" name="volume" value="oz" onChange={this.handleChange}/>oz
+				<input ref={this.refVolumeOz}  type="radio" name="volume" value=" fl oz" onChange={this.handleChange}/>fl oz
 
-				<button onClick={this.fetchSettings}>fetch</button>
 				<button onClick={this.saveChanges}>SAVE</button>
 				<button onClick={this.props.close}>CLOSE</button>
+				<button>delete account</button>
+				<button onClick={this.handleDataExport}>export data</button>	
+
 				{this.state.status}
 			</Modal>
 		)

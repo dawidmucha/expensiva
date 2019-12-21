@@ -21,12 +21,12 @@ class AddReceiptItem extends React.Component {
 		this.state = {
 			name: undefined,
 			amount: undefined,
-			volume: undefined,
-			volSfx: true,
+			units: undefined,
 			price: undefined,
 			isDiscount: false,
 			category: undefined,
 			subcat: undefined,
+			units: undefined,
 
 			categories: [],
 			subcats: [],
@@ -62,7 +62,7 @@ class AddReceiptItem extends React.Component {
 	}
 
 	handleChange(e) {
-		this.setState({ [e.target.id]: e.target.value })
+		e.target.id ? this.setState({ [e.target.id]: e.target.value }) : this.setState({ [e.target.name]: e.target.value }) // for radio selectors
 	}
 
 	handleSelectCategoryChange(e) {
@@ -83,12 +83,12 @@ class AddReceiptItem extends React.Component {
 	async handleAddReceiptItem() {
 		this.setState({ id: uuidv4() })
 		
-		if(this.state.name && this.state.price && this.state.category && this.state.subcat) {
+		if(this.state.name && this.state.price && this.state.category && this.state.subcat && this.state.amoSfx) {
 			await database.ref(`${store.getState().uid}/transactions/${this.props.id}/items`).push({ 
 				name: this.state.name,
+				units: this.state.units || 1,
 				amount: this.state.amount || 1,
-				volume: this.state.volume || 1,
-				volSfx: this.state.volSfx,
+				amoSfx: this.state.amoSfx,
 				price: this.state.price,
 				isDiscount: this.state.isDiscount || false,
 				category: this.state.category,
@@ -110,11 +110,13 @@ class AddReceiptItem extends React.Component {
 				<label htmlFor='name'>name</label>
 				<input type='text' id='name' onChange={this.handleChange} value={this.state.value} /> <br />
 
-				<label htmlFor='amount'>amount</label>
-				<input type='number' id='amount' onChange={this.handleChange} value={this.state.value} /> <br />
+				<label htmlFor='units'>units</label>
+				<input type='number' id='units' onChange={this.handleChange} value={this.state.value} /> <br />
 
-				<label htmlFor='volume'>volume</label>
-				<input type='number' id='volume' onChange={this.handleChange} value={this.state.value} /> <br />
+				<label htmlFor='amount'>amount</label>
+				<input type='number' id='amount' onChange={this.handleChange} value={this.state.value} /> 
+				<input type="radio" name="amoSfx" value="liq" onChange={this.handleChange}/>kg
+				<input type="radio" name="amoSfx" value="sol" onChange={this.handleChange}/>l <br />
 
 				<label htmlFor='price'>price</label>
 				<input type='number' id='price' onChange={this.handleChange} value={this.state.value} /> <br />

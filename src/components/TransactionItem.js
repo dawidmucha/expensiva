@@ -1,6 +1,8 @@
 import React from 'react'
 import EditReceipt from './modals/EditReceipt'
 import RemoveReceipt from './modals/RemoveReceipt'
+import database from '../firebase/firebase'
+import store from '../index'
 
 class TransactionItem extends React.Component {
 	constructor(props) {
@@ -11,11 +13,15 @@ class TransactionItem extends React.Component {
 			transactionSum: 0,
 			summary: [],
 			isEditReceiptModalOpen: false,
-			isRemoveReceiptModalOpen: false
+			isRemoveReceiptModalOpen: false,
+
+			affix: undefined,
+			currency: undefined
 		}
 
 		this.calculateTransactionSum = this.calculateTransactionSum.bind(this)
 		this.refreshData = this.refreshData.bind(this)
+		this.fetchAffix = this.fetchAffix.bind(this)
 
 		this.openEditReceiptModal = this.openEditReceiptModal.bind(this)
 		this.closeEditReceiptModal = this.closeEditReceiptModal.bind(this)
@@ -26,6 +32,18 @@ class TransactionItem extends React.Component {
 	
 	componentDidMount() {
 		this.calculateTransactionSum()
+		this.fetchAffix()
+	}
+
+	fetchAffix() {
+		database.ref(`${store.getState().uid}/settings`).on('value', snapshot => {
+			this.setState(() => {
+				return { 
+					affix: snapshot.val().affix,
+					currency: snapshot.val().currency
+				}
+			})
+		})
 	}
 
 	openEditReceiptModal() {
@@ -59,7 +77,7 @@ class TransactionItem extends React.Component {
 				state.summary.push(value.name)
 
 				return {
-					transactionSum: parseInt(state.transactionSum, 10) + parseInt(value.price, 10) * parseInt(value.amount, 10),
+					transactionSum: parseFloat(state.transactionSum, 10) + parseFloat(value.price, 10),
 					summary: state.summary
 				}
 			})
@@ -69,7 +87,9 @@ class TransactionItem extends React.Component {
 	render() {
 		return (
 			<div>
-				{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' + this.state.transactionSum } 
+				{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' + 
+					(this.state.affix === 'prefix' ? this.state.currency : '') + this.state.transactionSum + (this.state.affix === 'suffix' ? this.state.currency : '')
+				} 
 				<button onClick={this.openEditReceiptModal}>EDIT</button>
 				<button onClick={this.openRemoveReceiptModal}>REMOVE</button><br />
 				{ this.state.summary.join(', ') }
