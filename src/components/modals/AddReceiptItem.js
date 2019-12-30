@@ -26,7 +26,6 @@ class AddReceiptItem extends React.Component {
 			isDiscount: false,
 			category: undefined,
 			subcat: undefined,
-			units: undefined,
 
 			categories: [],
 			subcats: [],

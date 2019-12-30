@@ -5,11 +5,11 @@ import Categories from '../Categories'
 class Management extends React.Component {
   render() {
 		return (
-			<div>
+			<>
 				<Categories />
 				<br />
 				<Shops />
-			</div>
+			</>
 		)
 	}
 }

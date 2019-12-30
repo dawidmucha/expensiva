@@ -5,10 +5,10 @@ import Navbar from '../components/Navbar'
 
 export const PrivateRoute = ({ isAuthenticated, component: Component, ...rest}) => (
 	<Route {...rest} component={(props) => isAuthenticated ? (
-		<div>
+		<>
 			<Component {...props} />
 			<Navbar />
-		</div>
+		</>
 	) : (
 		<Redirect to='/' />
 	)} />

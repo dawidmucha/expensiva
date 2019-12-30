@@ -101,7 +101,7 @@ class Categories extends React.Component {
 	
 				arr = arr.concat( // addSubcat field
 					<li key={`li_sub_${i}`}>
-						<input type='text' id='subcat' value={this.state.value} onChange={this.handleChange} />
+						<input type='text' value={this.state.value} onChange={this.handleChange} />
 						<button onClick={() => this.addCategoriesElement(this.state.subcat, category)}>ADD</button>
 					</li>
 				) 

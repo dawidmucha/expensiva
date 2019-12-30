@@ -6,6 +6,8 @@ import { login, logout } from './actions/actions'
 import AppRouter, { history } from './routers/AppRouter'
 import { Provider } from 'react-redux'
 
+import './index.scss'
+
 const store = configureStore()
 
 store.subscribe(() => {

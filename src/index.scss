@@ -1,0 +1,12 @@
+@import './variables.scss';
+
+body {
+	height: 100vh;
+	background: url('./resources/bg1.svg');
+	background-color: $main;
+	margin: 0;
+}
+
+#root {
+	height: 100vh
+}

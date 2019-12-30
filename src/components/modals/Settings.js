@@ -3,8 +3,6 @@ import Modal from 'react-modal'
 import Select from 'react-select'
 import database from '../../firebase/firebase'
 import store from '../../index'
-import uuidv4 from 'uuid/v4'
-import moment from 'moment'
 import { firebase } from '../../firebase/firebase'
 import Jimp from 'jimp/es'
 import _ from 'lodash'
@@ -79,16 +77,21 @@ class Settings extends React.Component {
 				}
 			})
 		}
-
-		
 	}
 	
 	async fetchSettings() {
 		const ref = database.ref(`${store.getState().uid}/settings`)
 		const snapshot = await ref.once('value') 
-		const value = snapshot.val()
-		this.refDateFormat.current.state.value = this.state.dateFormatList.filter(item => item.value === snapshot.val().dateFormat)[0]
-		this.refCurrency.current.state.value = this.state.currencyList.filter(item => item.value === snapshot.val().currency)[0]
+		this.refCurrency.current.state.value = this.state.currencyList.filter(item => _.isEqual(item, snapshot.val().currency))[0]
+		this.refDateFormat.current.state.value = this.state.dateFormatList.filter(item => _.isEqual(item, snapshot.val().dateFormat))[0]
+		console.log('date format')
+		console.log(this.state.dateFormatList.filter(item => _.isEqual(item, snapshot.val().dateFormat))[0])
+		console.log(this.state.dateFormatList.filter(item => item))
+		console.log(snapshot.val().dateFormat)
+		console.log('currency list')
+		console.log(this.state.currencyList.filter(item => _.isEqual(item, snapshot.val().currency))[0])
+		console.log(this.state.currencyList.filter(item => item))
+		console.log(snapshot.val().currency)
 
 		if(snapshot.val().timeSystem === '12h') {
 			this.refTimeFormat12.current.checked = true
@@ -135,8 +138,8 @@ class Settings extends React.Component {
 		} 
 
 		this.setState({ 
-			dateFormat: this.refDateFormat.current.state.value,
-			currency: this.refCurrency.current.state.value,
+			dateFormat: this.refDateFormat.current.state.inputValue !== undefined ? this.refDateFormat.current.state : this.refDateFormat.current.state.value,
+			currency: this.refCurrency.current.state.inputValue !== undefined ? this.refCurrency.current.state : this.refCurrency.current.state.value,
 
 			avatar: snapshot.val().avatar, 
 			timeSystem: snapshot.val().timeSystem, 
@@ -153,10 +156,10 @@ class Settings extends React.Component {
 	}
 
 	handleCurrencyChange(e) {
-		this.setState({ currency: e.value })
+		this.setState({ currency: {label: e.label, value: e.value} })
 	}
 	handleDateFormatChange(e) {
-		this.setState({ dateFormat: e.value })
+		this.setState({ dateFormat: {label: e.value, value: e.value} })
 	}
 
 	handleFiles(e) {
@@ -202,7 +205,7 @@ class Settings extends React.Component {
 			json.filter(el => {
 				return (el.currencies[0].code && !!el.currencies[0].code.match(/[A-Z]{3}/))
 			}).map(el => { 
-				currencies.push({ label: el.currencies[0].code || el.currencies[0].symbol, value: el.currencies[0].symbol || el.currencies[0].code })
+				return currencies.push({ label: el.currencies[0].code || el.currencies[0].symbol, value: el.currencies[0].symbol || el.currencies[0].code })
 			})
 		})
 

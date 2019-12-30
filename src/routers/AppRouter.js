@@ -19,14 +19,14 @@ class AppRouter extends React.Component {
   render() {
     return (
 			<Router history={history}>
-				<div>
+				<>
 					<Switch>
             <PublicRoute path='/' component={LogIn} exact />
 						<PrivateRoute path='/dashboard' component={Dashboard} />
 						<PrivateRoute path='/categories' component={Management} />
 						<Route component={NotFoundPage} />
 					</Switch>
-				</div>
+				</>
 			</Router>
     )
   }

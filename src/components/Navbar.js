@@ -6,7 +6,7 @@ import database from '../firebase/firebase'
 import store from '../index'
 import Settings from './modals/Settings'
 
-
+import '../components-styles/Navbar.scss'
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -45,14 +45,15 @@ class Navbar extends React.Component {
   render() {
     const { startLogOut } = this.props
     return (
-      <div>
-        <br />
-        <NavLink to='/dashboard' activeClassName='is-active'>Dashboard</NavLink>
-        <NavLink to='/categories' activeClassName='is-active'>Categories</NavLink>
-        <img src={this.state.avatar} onClick={this.openSettingsModal} />
-        <button onClick={startLogOut}>Logout</button>
+      <div id='divNavbar'>
+        <div id='divNavbarFlexed'>
+          <NavLink to='/dashboard' activeClassName='is-active'>Dashboard</NavLink>
+          <NavLink to='/categories' activeClassName='is-active'>Categories</NavLink>
+          <button onClick={startLogOut}>Logout</button>
+        </div>
+          <img src={this.state.avatar} onClick={this.openSettingsModal} alt={'avatar - click to open settings'} />
 
-        <Settings isOpen={this.state.isSettingsModalOpen} onRequestClose={this.closeSettingsModal} close={this.closeSettingsModal} />
+          <Settings isOpen={this.state.isSettingsModalOpen} onRequestClose={this.closeSettingsModal} close={this.closeSettingsModal} />
       </div>
     )
   }

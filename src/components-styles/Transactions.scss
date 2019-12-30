@@ -1,0 +1,14 @@
+@import '../variables.scss';
+
+#ulTransactions {
+	background-color: yellow;
+	margin: 0 3rem 0 3rem;
+	padding: 2rem;
+	list-style-type: none;
+
+	.liTransactions {
+		background-color: yellowgreen;
+		padding: 0.3rem;
+		margin-bottom: 0.5rem;
+	}
+}

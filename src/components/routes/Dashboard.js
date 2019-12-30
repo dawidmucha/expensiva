@@ -2,6 +2,8 @@ import React from 'react'
 import Transacions from '../Transactions'
 import AddReceipt from '../modals/AddReceipt'
 
+import '../../components-styles/routes/Dashboard.scss'
+
 class Dashboard extends React.Component {
 	constructor(props) {
 		super(props)
@@ -24,12 +26,12 @@ class Dashboard extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<Transacions />
-				<button onClick={this.openAddReceiptModal}>+</button>
+			<>
+				<Transacions id='transactionsComponent' />
+				<button id='addReceiptButton' onClick={this.openAddReceiptModal}>+</button>
 
 				<AddReceipt isOpen={this.state.isAddReceiptModalOpen} onRequestClose={this.closeAddReceiptModal} />
-			</div>
+			</>
 		)
 	}
 }

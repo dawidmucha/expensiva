@@ -3,6 +3,8 @@ import database from '../firebase/firebase'
 import TransactionItem from './TransactionItem'
 import store from '../index'
 
+import '../components-styles/Transactions.scss'
+
 class Transactions extends React.Component {
 	constructor(props) {
 		super(props)
@@ -38,6 +40,9 @@ class Transactions extends React.Component {
 						transactions: [...state.transactions, transaction]
 					}
 				})
+
+
+
 			})
 		})
 	}	
@@ -45,14 +50,15 @@ class Transactions extends React.Component {
 	render() {
 		const transactionEls = this.state.transactions.map((el, i) => {
 			return (
-				<li key={i}>
-					<TransactionItem key={i} {...el[1]} id={el[0]} refreshData={this.refreshData}  /> 
+				<li className='liTransactions' key={i}>
+					<TransactionItem key={i} {...el[1]} id={el[0]} refreshData={this.refreshData} /> 
+					
 				</li>
 			)
 		})
 
 		return (
-			<ul>
+			<ul id='ulTransactions'>
 				{ transactionEls }
 			</ul>
 		)

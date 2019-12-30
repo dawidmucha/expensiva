@@ -12,6 +12,8 @@ class TransactionItem extends React.Component {
 			...props,
 			transactionSum: 0,
 			summary: [],
+			shopPic: undefined,
+
 			isEditReceiptModalOpen: false,
 			isRemoveReceiptModalOpen: false,
 
@@ -33,6 +35,12 @@ class TransactionItem extends React.Component {
 	componentDidMount() {
 		this.calculateTransactionSum()
 		this.fetchAffix()
+
+		database.ref(`${store.getState().uid}/shops/${this.state.shop}`).on('value', async (snapshot) => {
+			this.setState(() => ({
+				shopPic: snapshot.val()
+			}))
+		})
 	}
 
 	fetchAffix() {
@@ -87,8 +95,9 @@ class TransactionItem extends React.Component {
 	render() {
 		return (
 			<div>
+				<img src={this.state.shopPic} alt='shop picture' />
 				{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' + 
-					(this.state.affix === 'prefix' ? this.state.currency : '') + this.state.transactionSum + (this.state.affix === 'suffix' ? this.state.currency : '')
+					(this.state.affix === 'prefix' ? this.state.currency.value : '') + this.state.transactionSum + (this.state.affix === 'suffix' ? this.state.currency.value : '')
 				} 
 				<button onClick={this.openEditReceiptModal}>EDIT</button>
 				<button onClick={this.openRemoveReceiptModal}>REMOVE</button><br />
