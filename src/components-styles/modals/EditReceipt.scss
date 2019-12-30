@@ -1,0 +1,27 @@
+@import '../../variables.scss';
+
+.editReceiptHeader {
+	display: flex;
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 1.3rem;
+
+	.editReceiptHeaderSpacer {
+		flex-grow: 1;
+	}
+}
+
+.editReceiptList {
+	list-style-type: none;
+
+	.editReceiptListItem {
+		padding: 0.2rem 0;
+		border-bottom: 1px solid $black;
+	}
+
+	.editReceiptAddButton {
+		margin-top: 1rem;
+		padding: 0.3rem;
+		font-weight: bold;
+	}
+}

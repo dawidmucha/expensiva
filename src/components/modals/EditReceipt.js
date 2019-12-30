@@ -4,6 +4,8 @@ import AddReceiptItem from './AddReceiptItem'
 import database from '../../firebase/firebase'
 import store from '../../index'
 
+import '../../components-styles/modals/EditReceipt.scss'
+
 Modal.setAppElement('#root')
 
 class EditReceipt extends React.Component {
@@ -39,6 +41,7 @@ class EditReceipt extends React.Component {
 				}
 			})
 		})
+		setTimeout(() => console.log(this.state), 500)
 	}
 	
 	openAddReceiptItemModal() {
@@ -65,9 +68,9 @@ class EditReceipt extends React.Component {
 	render() {
 		const items = Object.entries(this.state.items || []).map((el, i) => {	
 			return (
-				<li key={i}>
+				<li className='editReceiptListItem' key={i}>
 					{el[1].name} - {el[1].amount}{el[1].amoSfx === 'sol' ? this.state.volume : this.state.weight} - ({el[1].category}/{el[1].subcat}) <button onClick={() => this.handleRemoveItem(el[0])}>X</button><br />
-					{(this.state.affix === 'prefix' ? this.state.currency : '') +el[1].price + (this.state.affix === 'suffix' ? this.state.currency : '')
+					{(this.state.affix === 'prefix' ? this.state.currency.value : '') + el[1].price + (this.state.affix === 'suffix' ? this.state.currency.value : '')
 					} ({el[1].units}x{el[1].price/el[1].units})
 				</li>
 			)
@@ -75,12 +78,16 @@ class EditReceipt extends React.Component {
 
 		return (
 			<Modal {...this.props} >
-				<div>
-					<h1>{this.state.shop} - {this.state.sum}</h1>
-					<h3>{this.state.date} @ {this.state.time}</h3>
-					<ul>
+				<div className='editReceiptContainer'>
+					<div className='editReceiptHeader'>
+						<div>{this.state.shop} - {(this.state.affix === 'prefix' ? this.state.currency.value : '') + this.props.sum + (this.state.affix === 'suffix' ? this.state.currency.value : '')}</div>
+						<div className='editReceiptHeaderSpacer' />
+						<div>{this.state.date} @ {this.state.time}</div>
+					</div>
+
+					<ul className='editReceiptList'>
 						{items || "no items"}
-						<li key={'add'}><button onClick={this.handleAddItem}>ADD</button></li>
+						<li key={'add'}><button className='editReceiptAddButton btn btnBlue' onClick={this.handleAddItem}>ADD</button></li>
 					</ul>
 
 					<AddReceiptItem isOpen={this.state.isAddReceiptItemModalOpen} onRequestClose={this.closeAddReceiptItemModal} id={this.props.id} refreshData={this.refreshData} />

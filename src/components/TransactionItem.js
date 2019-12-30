@@ -4,6 +4,8 @@ import RemoveReceipt from './modals/RemoveReceipt'
 import database from '../firebase/firebase'
 import store from '../index'
 
+import '../components-styles/TransactionItem.scss'
+
 class TransactionItem extends React.Component {
 	constructor(props) {
 		super(props)
@@ -85,7 +87,7 @@ class TransactionItem extends React.Component {
 				state.summary.push(value.name)
 
 				return {
-					transactionSum: parseFloat(state.transactionSum, 10) + parseFloat(value.price, 10),
+					transactionSum: Math.round(parseFloat(state.transactionSum, 10) + parseFloat(value.price, 10) * 100) / 100,
 					summary: state.summary
 				}
 			})
@@ -94,14 +96,18 @@ class TransactionItem extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<img src={this.state.shopPic} alt='shop picture' />
-				{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' + 
-					(this.state.affix === 'prefix' ? this.state.currency.value : '') + this.state.transactionSum + (this.state.affix === 'suffix' ? this.state.currency.value : '')
-				} 
-				<button onClick={this.openEditReceiptModal}>EDIT</button>
-				<button onClick={this.openRemoveReceiptModal}>REMOVE</button><br />
-				{ this.state.summary.join(', ') }
+			<div className='transactionItemContainer'>
+				<div className='transactionItemHeader'>
+					<img src={this.state.shopPic} alt='shop' />
+					<span>
+						{ this.state.shop + ' | ' + this.state.date + ' @ ' + this.state.time + ' ' +  (this.state.affix === 'prefix' ? this.state.currency.value : '') + this.state.transactionSum + (this.state.affix === 'suffix' ? this.state.currency.value : '') } 
+					</span>
+					<span className='transactionItemHeaderSpacer'></span>
+					<button onClick={this.openEditReceiptModal}>EDIT</button>
+					<button onClick={this.openRemoveReceiptModal}>REMOVE</button><br />
+				</div>
+
+				<div className='transactionItemSummary'>{ this.state.summary.join(', ') }</div>
 
 				<EditReceipt isOpen={this.state.isEditReceiptModalOpen} onRequestClose={this.closeEditReceiptModal} {...this.props} sum={this.state.transactionSum} refreshData={this.refreshData} />
 				<RemoveReceipt isOpen={this.state.isRemoveReceiptModalOpen} onRequestClose={this.closeRemoveReceiptModal} id={this.state.id} close={this.closeRemoveReceiptModal} />

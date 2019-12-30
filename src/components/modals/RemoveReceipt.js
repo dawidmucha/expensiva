@@ -3,6 +3,8 @@ import Modal from 'react-modal'
 import store from '../../index'
 import database from '../../firebase/firebase'
 
+import '../../components-styles/modals/RemoveReceipt.scss'
+
 Modal.setAppElement('#root')
 
 class RemoveReceipt extends React.Component {
@@ -29,10 +31,10 @@ class RemoveReceipt extends React.Component {
 	render() {
 		return (
 			<Modal {...this.props}>
-				<div>Are you sure? This action is irreversible!</div>
-				<div>
-					<button onClick={() => this.removeReceipt(this.props.id)}>YES</button>
-					<button onClick={this.closeRemoveReceiptItemModal}>NO</button>
+				<div id='removeReceiptText' >Are you sure? This action is irreversible!</div>
+				<div id='removeReceiptButtons' >
+					<button className='btn btnBlue' onClick={() => this.removeReceipt(this.props.id)}>YES</button>
+					<button className='btn btnRed' onClick={this.closeRemoveReceiptItemModal}>NO</button>
 				</div>
 			</Modal>
 		)

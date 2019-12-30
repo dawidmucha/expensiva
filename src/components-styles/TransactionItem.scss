@@ -1,0 +1,27 @@
+@import '../variables.scss';
+
+.transactionItemContainer {
+	.transactionItemHeader {
+		display: flex;
+		padding: 0.3rem;
+		font-size: 1.2rem;
+		font-weight: bold;
+
+		img {
+			border-radius: 50%;
+		}
+
+		span {
+			flex-grow: 1;
+		}
+
+		* {
+			align-self: center;
+			padding: 0.3rem;
+		}
+	}
+
+	.transactionItemSummary {
+		padding: 0.3rem 0rem 0.3rem 2.5rem;
+	}
+}

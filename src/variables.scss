@@ -22,4 +22,42 @@ $font: 'Varela Round', sans-serif;
 	outline: 0;
 	font-size: 100%;
 	background: transparent;
+	font-family: $font;
+}
+
+.btn {
+	display: inline;
+	padding: 0.2rem;
+	border: 1.5px solid;
+	border-radius: 0.5rem;
+	margin-right: 1rem;
+}
+
+.btnBlue {
+	background-color: $blue;
+	border-color: $blue-dark;
+}
+
+.btnRed {
+	background-color: $red;
+	border-color: $red-dark;
+}
+
+.ReactModal__Overlay, .ReactModal__Overlay--after-open{
+	display: flex !important;
+	background-color: rgba(0, 0, 0, 0.75) !important;
+	
+	.ReactModal__Content, .ReactModal__Content--after-open {
+		top: auto !important;
+		left: auto !important;
+		right: auto !important;
+		bottom: auto !important;
+		position: static !important;
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+		background-color: $green !important;
+		border-color: $black !important;
+		border-radius: 1rem !important;
+	}
 }
