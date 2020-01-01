@@ -27,6 +27,12 @@ $x: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAB
 	font-family: $font;
 }
 
+input[type='text'] {
+	padding: 0.3rem;
+	border-radius: 0.3rem;
+	background: $white;
+}
+
 .btn {
 	display: inline;
 	padding: 0.2rem;
@@ -51,6 +57,10 @@ $x: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAB
 	height: 1.5rem;
 	width: 1.5rem;
 	margin: 0.3rem 0.5rem;
+
+	img {
+		border-radius: 50%;
+	}
 }
 
 .ReactModal__Overlay, .ReactModal__Overlay--after-open{
