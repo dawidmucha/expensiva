@@ -3,7 +3,8 @@
 body {
 	height: 100vh;
 	background: url('./resources/bg1.svg');
-	background-color: $main;
+	background-color: $green-dark;
+	background-attachment: fixed;
 	margin: 0;
 }
 

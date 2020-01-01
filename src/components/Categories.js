@@ -2,6 +2,8 @@ import React from 'react'
 import database from '../firebase/firebase'
 import store from '../index'
 
+import '../components-styles/Categories.scss'
+
 class Categories extends React.Component {
 	constructor() {
 		super()
@@ -16,7 +18,9 @@ class Categories extends React.Component {
 			categoriesHtml: [],
 
 			subcat: '',
-			category: ''
+			category: '',
+
+			x: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAYklEQVQoz2NgZmD4D8WKDEQAZgYGRZgeBiTNBA1A1gjTrIhmgAoOjSpYLcIpgcNGDAuwKFDEJ07QT8wMDO6khAk2L+ANC2wGWKJptCRWI3k2k+1nskOb7HimKIVRmrbJzlUAnDtYcy0BJa0AAAAASUVORK5CYII='
 		}
 	}
 
@@ -85,36 +89,40 @@ class Categories extends React.Component {
 		if(this.state.categories) {
 			Object.keys(this.state.categories).map((category, i) => { 
 				arr = arr.concat( //list of categories
-					<ul key={`ul${i}`}>
+					<div>
 						{category}
-						<button onClick={() => this.removeCategoriesElement(category)}>x</button>
-					</ul>
+						<button className='btn btnRed btnX' onClick={() => this.removeCategoriesElement(category)}><img alt='X' src={this.state.x} /></button>
+					</div>
 				)
 	
 				this.state.categories[category].map((subcategory, j) => { //sub-lists of subcategories
 					return subcategory !== 0 ? arr = arr.concat(
 						<li key={`ul${i}${j}`}>{subcategory}
-							<button onClick={() => this.removeCategoriesElement(subcategory, category)}>x</button>
+							<button className='btn btnRed btnX'  onClick={() => this.removeCategoriesElement(subcategory, category)}><img alt='X' src={this.state.x} /></button>
 						</li>
 					) : undefined
 				})
 	
 				arr = arr.concat( // addSubcat field
-					<li key={`li_sub_${i}`}>
-						<input type='text' value={this.state.value} onChange={this.handleChange} />
-						<button onClick={() => this.addCategoriesElement(this.state.subcat, category)}>ADD</button>
+					<li key={`li_sub_${i}`} className='addSubcat'>
+						<input className='input' type='text' value={this.state.value} onChange={this.handleChange} />
+						<button className='btn btnBlue'  onClick={() => this.addCategoriesElement(this.state.subcat, category)}>ADD</button>
 					</li>
 				) 
-	
+
 				return arr
 			})
 		}
 
+		arr = arr.concat(
+			<div className='addCategoryText'>add new category</div>
+		)
+
 		arr = arr.concat( // addCategory field
-			<ul key={`li_cat`}>
-				<input id='category' type='text' value={this.state.value} onChange={this.handleChange} />
-				<button onClick={() => this.addCategoriesElement(this.state.category)}>ADD</button>
-			</ul>
+			<li key={`li_cat`} className='addCategory'>
+				<input className='input' id='category' type='text' value={this.state.value} onChange={this.handleChange} />
+				<button className='btn btnBlue' onClick={() => this.addCategoriesElement(this.state.category)}>ADD</button>
+			</li>
 		)
 
 		this.setState({ categoriesHtml: arr })
@@ -122,8 +130,11 @@ class Categories extends React.Component {
 	
 	render() {
 		return (
-			<div>
-				{ this.state.categoriesHtml }
+			<div id='categoriesContainer'>
+				<h1>CATEGORIES</h1>
+				<ul>
+					{ this.state.categoriesHtml }
+				</ul>
 			</div>
 		)
 	}

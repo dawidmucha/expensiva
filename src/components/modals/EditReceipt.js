@@ -26,7 +26,9 @@ class EditReceipt extends React.Component {
 			volume: undefined,
 			weight: undefined,
 
-			isAddReceiptItemModalOpen: false
+			isAddReceiptItemModalOpen: false,
+
+			x: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABCSURBVBhXdY5bCgAgCAQHqvvUd3b/Y1XSEhG1IPtQUQJ0oM46UZVjEtmNs7wtqyBCuwYXEhRvOCva+G7+b0o8vqUPzOARZSj3gE0AAAAASUVORK5CYII='
 		}
 	}
 
@@ -69,7 +71,7 @@ class EditReceipt extends React.Component {
 		const items = Object.entries(this.state.items || []).map((el, i) => {	
 			return (
 				<li className='editReceiptListItem' key={i}>
-					{el[1].name} - {el[1].amount}{el[1].amoSfx === 'sol' ? this.state.volume : this.state.weight} - ({el[1].category}/{el[1].subcat}) <button onClick={() => this.handleRemoveItem(el[0])}>X</button><br />
+					{el[1].name} - {el[1].amount}{el[1].amoSfx === 'sol' ? this.state.volume : this.state.weight} - ({el[1].category}/{el[1].subcat}) <button class='btn btnRed' onClick={() => this.handleRemoveItem(el[0])}><img alt='X' src={this.state.x} viewBox='0 0 25 25' /></button><br />
 					{(this.state.affix === 'prefix' ? this.state.currency.value : '') + el[1].price + (this.state.affix === 'suffix' ? this.state.currency.value : '')
 					} ({el[1].units}x{el[1].price/el[1].units})
 				</li>

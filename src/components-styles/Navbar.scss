@@ -2,8 +2,8 @@
 
 #divNavbar {
 	background-color: $grey-dark;
-	position: absolute;
-	width: 100vw;
+	position: fixed;
+	width: 100%;
 	bottom: 0;
 	height: 4rem;
 	display: flex;

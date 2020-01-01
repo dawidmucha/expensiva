@@ -1,0 +1,64 @@
+@import '../variables.scss';
+
+#categoriesContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80vw;
+	margin: 0 auto;
+	background-color: $main;
+	border: 3px solid $black;
+	margin: 0.3rem auto;
+	border-radius: 2rem;
+
+	h1 {
+		font-size: 2rem;
+		padding: 0.3rem;
+	}
+
+	ul {
+		font-weight: bold;
+		font-size: 1.5rem;
+		
+		li {
+			font-weight: normal;
+			font-size: 1rem;
+			list-style-type: none;
+			margin: 0.5rem 1.5rem;
+			border-bottom: 1px solid rgba(1, 1, 1, 0.15);
+		
+			&:last-child { /* add category input */
+				margin-top: 3rem;
+				border: none;
+			}
+
+		}
+		
+		.addCategoryText {
+			border-bottom: none;
+			font-size: 1.2rem;
+			text-align: center;
+		}
+		
+		.addCategory {
+			margin-top: 0.3rem !important;
+		}
+
+		.addSubcat {
+			border: none;
+		}
+
+		div {
+			border-bottom: 1px solid black;
+		}
+	}
+	
+	
+	* .input {
+		margin-top: 2rem;
+		border: 1px solid $black;
+		border-radius: 0.3rem;
+		margin: 0.3rem;
+		margin-bottom: 2rem;
+	}
+}

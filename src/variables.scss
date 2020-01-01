@@ -5,15 +5,17 @@ $green: #1C9C1F;
 $green-dark: #007700;
 $grey: #A2AF9F;
 $grey-dark: #3F4A3C;
-$blue: #0094FF;
-$blue-dark: #006AC2;
-$red: #FF005B;
-$red-dark: #D60505;
+$blue: #52B6FF;
+$blue-dark: #3E89C7;
+$red: #FF5491;
+$red-dark: #DD4949;
 
 $white: #eeeeee;
 $black: #111111;
 
 $font: 'Varela Round', sans-serif;
+
+$x: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAjklEQVRIx7WWSw7AIAhEwd7/yE27MU0TRX4zbmF4BR2tXiKPzHWLqIDWv+6wAijAAkGAdnq1ApXRWXXUS+gCvk66IE+nWUElX6vCTF75CzMdH+dtFcqOtLSpGUAI4oEipw/iAwiE3gliT8Yp2PFLqBO6T+iOp99d9FuY/p7QX0YU4ARafNL9Ldrph5eAAL2J8U8l/kd/AAAAAABJRU5ErkJggg==');
 
 * {
 	margin: 0;
@@ -31,6 +33,7 @@ $font: 'Varela Round', sans-serif;
 	border: 1.5px solid;
 	border-radius: 0.5rem;
 	margin-right: 1rem;
+	cursor: pointer;
 }
 
 .btnBlue {
@@ -41,6 +44,13 @@ $font: 'Varela Round', sans-serif;
 .btnRed {
 	background-color: $red;
 	border-color: $red-dark;
+}
+
+.btnX {
+	font-size: 1rem;
+	height: 1.5rem;
+	width: 1.5rem;
+	margin: 0.3rem 0.5rem;
 }
 
 .ReactModal__Overlay, .ReactModal__Overlay--after-open{
