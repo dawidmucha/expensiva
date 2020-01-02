@@ -8,6 +8,8 @@ import Jimp from 'jimp/es'
 import _ from 'lodash'
 import { saveAs } from 'file-saver';
 
+import '../../components-styles/modals/Settings.scss'
+
 Modal.setAppElement('#root')
 
 class Settings extends React.Component {
@@ -84,14 +86,8 @@ class Settings extends React.Component {
 		const snapshot = await ref.once('value') 
 		this.refCurrency.current.state.value = this.state.currencyList.filter(item => _.isEqual(item, snapshot.val().currency))[0]
 		this.refDateFormat.current.state.value = this.state.dateFormatList.filter(item => _.isEqual(item, snapshot.val().dateFormat))[0]
-		console.log('date format')
-		console.log(this.state.dateFormatList.filter(item => _.isEqual(item, snapshot.val().dateFormat))[0])
-		console.log(this.state.dateFormatList.filter(item => item))
-		console.log(snapshot.val().dateFormat)
-		console.log('currency list')
-		console.log(this.state.currencyList.filter(item => _.isEqual(item, snapshot.val().currency))[0])
-		console.log(this.state.currencyList.filter(item => item))
-		console.log(snapshot.val().currency)
+
+		console.log(this.refCurrency.current.state.value, this.refDateFormat.current.state.value)
 
 		if(snapshot.val().timeSystem === '12h') {
 			this.refTimeFormat12.current.checked = true
@@ -252,7 +248,7 @@ class Settings extends React.Component {
 
 	render() {
 		return (
-			<Modal {...this.props} >
+			<Modal {...this.props} id='settingsContainer'>
 				{/* <h3>change personal informaiton</h3>
 					
 				<div>username:</div>
@@ -264,37 +260,58 @@ class Settings extends React.Component {
 				<div>password:</div>
 				<input ref={this.refPassword} type="password" onChange={this.handleCredentials}/>  */}
 				
-				<h3>preferences</h3>
+				<h1>SETTINGS</h1>
 				
-				<img src={this.state.avatar} alt='avatar' />
-				<input type='file' onChange={this.handleFiles} />
+				<img id='settingsAvatar' src={this.state.avatar} alt='avatar' />
+				<input id='settingsUploadAvatar' type='file' onChange={this.handleFiles} />
 			
-				<div>currency</div>
-				<Select ref={this.refCurrency} options={this.state.currencyList} onChange={this.handleCurrencyChange} />
-				<input ref={this.refAffixPre} type="radio" name="affix" value="prefix" onChange={this.handleChange}/>prefix
-				<input ref={this.refAffixSuf} type="radio" name="affix" value="suffix" onChange={this.handleChange}/>suffix
+				<div id='settingsCurrency'>
+					<h3>currency</h3>
+					<div>
+						<Select ref={this.refCurrency} options={this.state.currencyList} onChange={this.handleCurrencyChange} />
+						<input ref={this.refAffixPre} type="radio" name="affix" value="prefix" onChange={this.handleChange}/>prefix
+						<input ref={this.refAffixSuf} type="radio" name="affix" value="suffix" onChange={this.handleChange}/>suffix
+					</div>
+				</div>
 
-				<div>date format</div>
-				<Select ref={this.refDateFormat} options={this.state.dateFormatList} onChange={this.handleDateFormatChange} /> 
+				<div id='settingsDateFormat'>
+					<h3>date format</h3>
+					<div>
+						<Select ref={this.refDateFormat} options={this.state.dateFormatList} onChange={this.handleDateFormatChange} /> 
+					</div>
+				</div>
 
-				<div>time format</div>
-				<input ref={this.refTimeFormat12} type="radio" name="timeSystem" value="12h" onChange={this.handleChange}/>12h
-				<input ref={this.refTimeFormat24} type="radio" name="timeSystem" value="24h" onChange={this.handleChange}/>24h
+				<div id='settingsTimeFormat'>
+					<h3>time format</h3>
+					<input ref={this.refTimeFormat12} type="radio" name="timeSystem" value="12h" onChange={this.handleChange}/>12h
+					<input ref={this.refTimeFormat24} type="radio" name="timeSystem" value="24h" onChange={this.handleChange}/>24h
+				</div>
 
-				<div>weight</div>
-				<input ref={this.refWeightKg}  type="radio" name="weight" value="kg" onChange={this.handleChange}/>kg
-				<input ref={this.refWeightLbs} type="radio" name="weight" value="lbs" onChange={this.handleChange}/>lbs
+				<div id='settingsWeight'>
+					<h3>weight</h3>
+					<input ref={this.refWeightKg}  type="radio" name="weight" value="kg" onChange={this.handleChange}/>kg
+					<input ref={this.refWeightLbs} type="radio" name="weight" value="lbs" onChange={this.handleChange}/>lbs
+				</div>
 
-				<div>volume</div>
-				<input ref={this.refVolumeL} type="radio" name="volume" value="l" onChange={this.handleChange}/>l
-				<input ref={this.refVolumeOz}  type="radio" name="volume" value=" fl oz" onChange={this.handleChange}/>fl oz
+				<div id='settingsVolume'>
+					<h3>volume</h3>
+					<input ref={this.refVolumeL} type="radio" name="volume" value="l" onChange={this.handleChange}/>l
+					<input ref={this.refVolumeOz}  type="radio" name="volume" value=" fl oz" onChange={this.handleChange}/>fl oz
+				</div>
+				
+				<div id='settingsButtons'>
+					<div id='settingsButtonSave'>
+						{this.state.status}
+						<button class='btn btnBlue' onClick={this.saveChanges}>SAVE</button>
+					</div>	
+					<div id='settingsButtonClose'>
+						<button class='btn btnRed' onClick={this.props.close}>CLOSE</button>
+					</div>
+					<div id='settingsButtonExportData'>
+						<button class='btn btnBlue' onClick={this.handleDataExport}>EXPORT DATA</button>
+					</div>	
+				</div>
 
-				<button onClick={this.saveChanges}>SAVE</button>
-				<button onClick={this.props.close}>CLOSE</button>
-				<button>delete account</button>
-				<button onClick={this.handleDataExport}>export data</button>	
-
-				{this.state.status}
 			</Modal>
 		)
 	}

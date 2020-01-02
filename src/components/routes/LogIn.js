@@ -2,10 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startLogIn } from '../../actions/actions'
 
+import '../../components-styles/routes/LogIn.scss'
+
 const LogIn = ({ startLogIn }) => (
-  <div>
-    <p>please log in</p>
-    <button onClick={startLogIn}>LOG IN</button>
+  <div id='logInContainer'>
+    <button class='btn btnBlue' onClick={startLogIn}>LOG IN</button>
   </div>
 )
 
