@@ -84,66 +84,66 @@ class Settings extends React.Component {
 	async fetchSettings() {
 		const ref = database.ref(`${store.getState().uid}/settings`)
 		const snapshot = await ref.once('value') 
-		this.refCurrency.current.state.value = this.state.currencyList.filter(item => _.isEqual(item, snapshot.val().currency))[0]
-		this.refDateFormat.current.state.value = this.state.dateFormatList.filter(item => _.isEqual(item, snapshot.val().dateFormat))[0]
-
-		console.log(this.refCurrency.current.state.value, this.refDateFormat.current.state.value)
-
-		if(snapshot.val().timeSystem === '12h') {
-			this.refTimeFormat12.current.checked = true
-			this.refTimeFormat24.current.checked = false
-		} else if(snapshot.val().timeSystem === '24h') {
-			this.refTimeFormat12.current.checked = false
-			this.refTimeFormat24.current.checked = true
-		} else {
-			this.refTimeFormat12.current.checked = false
-			this.refTimeFormat24.current.checked = false
+		if(snapshot.val()) {
+			this.refCurrency.current.state.value = this.state.currencyList.filter(item => _.isEqual(item, snapshot.val().currency))[0]
+			this.refDateFormat.current.state.value = this.state.dateFormatList.filter(item => _.isEqual(item, snapshot.val().dateFormat))[0]
+			
+			if(snapshot.val().timeSystem === '12h') {
+				this.refTimeFormat12.current.checked = true
+				this.refTimeFormat24.current.checked = false
+			} else if(snapshot.val().timeSystem === '24h') {
+				this.refTimeFormat12.current.checked = false
+				this.refTimeFormat24.current.checked = true
+			} else {
+				this.refTimeFormat12.current.checked = false
+				this.refTimeFormat24.current.checked = false
+			}
+			
+			if(snapshot.val().volume === 'l') {
+				this.refVolumeL.current.checked = true
+				this.refVolumeOz.current.checked = false
+			} else if(snapshot.val().volume === 'oz') {
+				this.refVolumeL.current.checked = false
+				this.refVolumeOz.current.checked = true
+			} else {
+				this.refVolumeL.current.checked = false
+				this.refVolumeOz.current.checked = false
+			}
+			
+			if(snapshot.val().weight === 'kg') {
+				this.refWeightKg.current.checked = true
+				this.refWeightLbs.current.checked = false
+			} else if(snapshot.val().weight === 'lbs') {
+				this.refWeightKg.current.checked = false
+				this.refWeightLbs.current.checked = true
+			} else {
+				this.refWeightKg.current.checked = false
+				this.refWeightLbs.current.checked = false
+			} 
+			
+			if(snapshot.val().affix === 'prefix') {
+				this.refAffixPre.current.checked = true
+				this.refAffixSuf.current.checked = false
+			} else if(snapshot.val().affix === 'suffix') {
+				this.refAffixPre.current.checked = false
+				this.refAffixSuf.current.checked = true
+			} else {
+				this.refAffixPre.current.checked = false
+				this.refAffixSuf.current.checked = false
+			} 
+			
+			this.setState({ 
+				dateFormat: this.refDateFormat.current.state.inputValue !== undefined ? this.refDateFormat.current.state : this.refDateFormat.current.state.value,
+				currency: this.refCurrency.current.state.inputValue !== undefined ? this.refCurrency.current.state : this.refCurrency.current.state.value,
+				
+				avatar: snapshot.val().avatar, 
+				timeSystem: snapshot.val().timeSystem, 
+				volume: snapshot.val().volume, 
+				weight: snapshot.val().weight,
+				affix: snapshot.val().affix 
+			})
 		}
-
-		if(snapshot.val().volume === 'l') {
-			this.refVolumeL.current.checked = true
-			this.refVolumeOz.current.checked = false
-		} else if(snapshot.val().volume === 'oz') {
-			this.refVolumeL.current.checked = false
-			this.refVolumeOz.current.checked = true
-		} else {
-			this.refVolumeL.current.checked = false
-			this.refVolumeOz.current.checked = false
-		}
-
-		if(snapshot.val().weight === 'kg') {
-			this.refWeightKg.current.checked = true
-			this.refWeightLbs.current.checked = false
-		} else if(snapshot.val().weight === 'lbs') {
-			this.refWeightKg.current.checked = false
-			this.refWeightLbs.current.checked = true
-		} else {
-			this.refWeightKg.current.checked = false
-			this.refWeightLbs.current.checked = false
-		} 
-
-		if(snapshot.val().affix === 'prefix') {
-			this.refAffixPre.current.checked = true
-			this.refAffixSuf.current.checked = false
-		} else if(snapshot.val().affix === 'suffix') {
-			this.refAffixPre.current.checked = false
-			this.refAffixSuf.current.checked = true
-		} else {
-			this.refAffixPre.current.checked = false
-			this.refAffixSuf.current.checked = false
-		} 
-
-		this.setState({ 
-			dateFormat: this.refDateFormat.current.state.inputValue !== undefined ? this.refDateFormat.current.state : this.refDateFormat.current.state.value,
-			currency: this.refCurrency.current.state.inputValue !== undefined ? this.refCurrency.current.state : this.refCurrency.current.state.value,
-
-			avatar: snapshot.val().avatar, 
-			timeSystem: snapshot.val().timeSystem, 
-			volume: snapshot.val().volume, 
-			weight: snapshot.val().weight,
-			affix: snapshot.val().affix 
-		})
-
+			
 		this.forceUpdate()
 	}
 	
@@ -302,13 +302,13 @@ class Settings extends React.Component {
 				<div id='settingsButtons'>
 					<div id='settingsButtonSave'>
 						{this.state.status}
-						<button class='btn btnBlue' onClick={this.saveChanges}>SAVE</button>
+						<button className='btn btnBlue' onClick={this.saveChanges}>SAVE</button>
 					</div>	
 					<div id='settingsButtonClose'>
-						<button class='btn btnRed' onClick={this.props.close}>CLOSE</button>
+						<button className='btn btnRed' onClick={this.props.close}>CLOSE</button>
 					</div>
 					<div id='settingsButtonExportData'>
-						<button class='btn btnBlue' onClick={this.handleDataExport}>EXPORT DATA</button>
+						<button className='btn btnBlue' onClick={this.handleDataExport}>EXPORT DATA</button>
 					</div>	
 				</div>
 

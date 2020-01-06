@@ -26,6 +26,7 @@ class TransactionItem extends React.Component {
 		this.calculateTransactionSum = this.calculateTransactionSum.bind(this)
 		this.refreshData = this.refreshData.bind(this)
 		this.fetchAffix = this.fetchAffix.bind(this)
+		this.setDefaultSettings = this.setDefaultSettings.bind(this)
 
 		this.openEditReceiptModal = this.openEditReceiptModal.bind(this)
 		this.closeEditReceiptModal = this.closeEditReceiptModal.bind(this)
@@ -35,6 +36,7 @@ class TransactionItem extends React.Component {
 	}
 	
 	componentDidMount() {
+		this.setDefaultSettings()
 		this.calculateTransactionSum()
 		this.fetchAffix()
 
@@ -45,14 +47,37 @@ class TransactionItem extends React.Component {
 		})
 	}
 
+	setDefaultSettings() {
+		database.ref(`${store.getState().uid}/settings`).on('value', snapshot => {
+			if(!snapshot.val()) {
+				database.ref(`${store.getState().uid}/settings`).set({
+					affix: 'prefix',
+					currency: {
+						label: 'USD',
+						value: '$'
+					},
+					dateFormat: {
+						label: 'YY/MM/DD',
+						value: 'YY/MM/DD'
+					},
+					timeSystem: '12h',
+					volume: 'l',
+					weight: 'kg'
+				})
+			}
+		})
+	}
+
 	fetchAffix() {
 		database.ref(`${store.getState().uid}/settings`).on('value', snapshot => {
-			this.setState(() => {
-				return { 
-					affix: snapshot.val().affix,
-					currency: snapshot.val().currency
-				}
-			})
+			if(snapshot.val()) {
+				this.setState(() => {
+					return { 
+						affix: snapshot.val().affix,
+						currency: snapshot.val().currency
+					}
+				})
+			} else this.forceUpdate()
 		})
 	}
 

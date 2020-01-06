@@ -26,7 +26,7 @@ class Navbar extends React.Component {
     let avatar
 
     database.ref(`${store.getState().uid}/settings`).on('value', snapshot => {
-      if(snapshot.val().avatar) avatar = snapshot.val().avatar
+      if(snapshot.val()) avatar = snapshot.val().avatar
   
       this.setState(state => ({
         avatar: avatar || state.defAv

@@ -1,0 +1,36 @@
+@import '../../variables.scss';
+
+.addReceiptItemContainer {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: 30% 50% 10% 10%;
+
+	& > * {
+		margin-top: 0.4rem;
+	}
+
+	.addReceiptItemErrorMessage {
+		grid-column: span 4;
+		margin-top: 0rem;
+	}
+
+	.addReceiptItemNameInput, .addReceiptItemUnitsInput, .addReceiptItemPriceInput, .addReceiptItemDiscountCheckbox, .addReceiptItemCategorySelect, .addReceiptItemSubcatSelect {
+		grid-column: span 3;
+	}
+
+	.addReceiptItemAmountRadioLiq, .addReceiptItemAmountRadioSol {
+		margin: 0rem 0.5rem;
+		width: 2rem;
+	}
+
+	.addReceiptItemButton {
+		grid-column: span 4;
+		margin: 0;
+		margin-top: 0.4rem;
+	}
+
+	.label {
+		text-align: right;
+		padding-right: 0.3rem;
+	}
+}

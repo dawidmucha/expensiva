@@ -6,7 +6,7 @@ import '../../components-styles/routes/LogIn.scss'
 
 const LogIn = ({ startLogIn }) => (
   <div id='logInContainer'>
-    <button class='btn btnBlue' onClick={startLogIn}>LOG IN</button>
+    <button className='btn btnBlue' onClick={startLogIn}>LOG IN</button>
   </div>
 )
 

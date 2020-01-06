@@ -1,0 +1,67 @@
+@import '../../variables.scss';
+
+.addReceiptModal {
+	width: 40%;
+	padding: 1rem;
+
+	& > * {
+		padding: 0.3rem;
+		text-align: center;
+	}
+
+	#addReceiptError {
+		font-size: 1.5rem;
+		color: $red-dark;
+		text-shadow: 0px 0px 3px $black;
+	}
+
+	#addReceiptShopMessage {
+		color: $black;
+		text-shadow: 0px 0px 1px $black;
+
+		button {
+			font-size: 1.5rem;
+			padding: 0.5rem;
+		}
+	}
+
+	#addReceiptForm {
+		& > * {
+			padding: 0.3rem 0.3rem;
+		}
+
+		input[type=date] {
+			appearance: none;
+			-webkit-appearance: none;
+			color: $black;
+			font-size: 18px;
+			border:1px solid $black;
+			border-radius: 0.3rem;
+			background: $white;
+			padding:5px;
+			display: inline-block !important;
+			visibility: visible !important;
+
+			&::-webkit-clear-button {
+				display: none;
+			}
+
+			&::-webkit-calendar-picker-indicator {
+				color: #2c3e50;
+			}
+		}
+
+		input[type=time] {
+			appearance: none;
+			-webkit-appearance: none;
+			color: $black;
+			font-size: 18px;
+			border:1px solid $black;
+			border-radius: 0.3rem;
+			background: $white;
+			padding:5px;
+			display: inline-block !important;
+			visibility: visible !important;
+		}
+	}
+}

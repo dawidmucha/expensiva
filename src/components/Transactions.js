@@ -32,22 +32,26 @@ class Transactions extends React.Component {
 				itemCounter: 0
 			})
 			
-			Object.keys(snapshot.val()).map(el => { // el = id
-				const transaction = [el, snapshot.val()[el]]
-
-				return this.setState(state => {
-					return {
-						transactions: [...state.transactions, transaction]
-					}
-				})
-
-
-
+			Object.keys(snapshot.val() || {}).map(el => { // el = id
+					const transaction = [el, snapshot.val()[el]]
+	
+					return this.setState(state => {
+						return {
+							transactions: [...state.transactions, transaction]
+						}
+					})
 			})
 		})
 	}	
 
 	render() {
+		const noRecords = (
+				<li>
+					<h1 id='noRecordsTitle'>Currently no records</h1>
+					<h2 id='noRecordsSubtitle'>Start by clicking on the red circle in the bottom right!</h2>
+				</li>
+		)
+		
 		const transactionEls = this.state.transactions.map((el, i) => {
 			return (
 				<li className='liTransactions' key={i}>
@@ -59,7 +63,7 @@ class Transactions extends React.Component {
 
 		return (
 			<ul id='ulTransactions'>
-				{ transactionEls }
+				{ transactionEls.length > 0 ? transactionEls : noRecords}
 			</ul>
 		)
 	}

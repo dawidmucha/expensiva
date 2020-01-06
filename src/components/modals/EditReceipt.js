@@ -34,16 +34,17 @@ class EditReceipt extends React.Component {
 
 	componentDidMount() {
 		database.ref(`${store.getState().uid}/settings`).on('value', snapshot => {
-			this.setState(() => {
-				return { 
-					affix: snapshot.val().affix,
-					currency: snapshot.val().currency,
-					volume: snapshot.val().volume,
-					weight: snapshot.val().weight
-				}
-			})
+			if(snapshot.val()) {
+				this.setState(() => {
+					return { 
+						affix: snapshot.val().affix,
+						currency: snapshot.val().currency,
+						volume: snapshot.val().volume,
+						weight: snapshot.val().weight
+					}
+				})
+			} else this.forceUpdate()
 		})
-		setTimeout(() => console.log(this.state), 500)
 	}
 	
 	openAddReceiptItemModal() {

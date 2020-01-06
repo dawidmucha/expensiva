@@ -5,6 +5,8 @@ import database from '../../firebase/firebase'
 import store from '../../index'
 import uuidv4 from 'uuid/v4'
 
+import '../../components-styles/modals/AddReceiptItem.scss'
+
 Modal.setAppElement('#root')
 
 class AddReceiptItem extends React.Component {
@@ -103,33 +105,33 @@ class AddReceiptItem extends React.Component {
 
 	render() {
 		return (
-			<Modal {...this.props}>
-				<p>{this.state.errorMessage}</p>
+			<Modal {...this.props} className='addReceiptItemContainer'>
+				<p className='addReceiptItemErrorMessage'>{this.state.errorMessage}</p>
 
-				<label htmlFor='name'>name</label>
-				<input type='text' id='name' onChange={this.handleChange} value={this.state.value} /> <br />
+					<label className='addReceiptItemNameLabel label' htmlFor='name'>name</label>
+					<input className='addReceiptItemNameInput' type='text' id='name' onChange={this.handleChange} value={this.state.value} />
+					
+					<label className='addReceiptItemUnitsLabel label' htmlFor='units'>units</label>
+					<input className='addReceiptItemUnitsInput' type='number' id='units' onChange={this.handleChange} value={this.state.value} />
 
-				<label htmlFor='units'>units</label>
-				<input type='number' id='units' onChange={this.handleChange} value={this.state.value} /> <br />
+					<label className='addReceiptItemAmountLabel label' htmlFor='amount'>amount</label>
+					<input className='addReceiptItemAmountInput' type='number' id='amount' onChange={this.handleChange} value={this.state.value} /> 
+					<div className='addReceiptItemAmountRadioLiq'><input type="radio" name="amoSfx" value="liq" onChange={this.handleChange}/>kg</div>
+					<div className='addReceiptItemAmountRadioSol'><input type="radio" name="amoSfx" value="sol" onChange={this.handleChange}/>l</div>
 
-				<label htmlFor='amount'>amount</label>
-				<input type='number' id='amount' onChange={this.handleChange} value={this.state.value} /> 
-				<input type="radio" name="amoSfx" value="liq" onChange={this.handleChange}/>kg
-				<input type="radio" name="amoSfx" value="sol" onChange={this.handleChange}/>l <br />
+					<label className='addReceiptItemPriceLabel label' htmlFor='price'>price</label>
+					<input className='addReceiptItemPriceInput' type='number' id='price' onChange={this.handleChange} value={this.state.value} />
 
-				<label htmlFor='price'>price</label>
-				<input type='number' id='price' onChange={this.handleChange} value={this.state.value} /> <br />
+					<label className='addReceiptItemDiscountLabel label' htmlFor='isDiscount'>discount?</label>
+					<input className='addReceiptItemDiscountCheckbox' type='checkbox' id='isDiscount' onChange={this.handleCheckboxChange} value={this.state.value} />
 
-				<label htmlFor='isDiscount'>discount?</label>
-				<input type='checkbox' id='isDiscount' onChange={this.handleCheckboxChange} value={this.state.value} /> <br />
+					<label className='addReceiptItemCategoryLabel label' htmlFor='category'>category</label>
+					<Select className='addReceiptItemCategorySelect' options={this.state.categories} onChange={this.handleSelectCategoryChange} value={this.props.value} />
+				
+					<label className='addReceiptItemSubcarLabel label' htmlFor='subcat'>subcategory</label>
+					<Select className='addReceiptItemSubcatSelect' options={this.state.subcats} onChange={this.handleSelectSubcatChange} value={this.props.value} />
 
-				<label htmlFor='category'>category</label>
-				<Select options={this.state.categories} onChange={this.handleSelectCategoryChange} value={this.props.value} />
-
-				<label htmlFor='subcat'>subcat.</label>
-				<Select options={this.state.subcats} onChange={this.handleSelectSubcatChange} value={this.props.value} />
-
-				<button onClick={this.handleAddReceiptItem}>ADD</button>
+				<button className='btn btnBlue addReceiptItemButton' onClick={this.handleAddReceiptItem}>ADD</button>
 			</Modal>
 		)
 	}

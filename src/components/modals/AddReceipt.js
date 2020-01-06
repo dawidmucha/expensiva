@@ -6,6 +6,8 @@ import store from '../../index'
 import uuidv4 from 'uuid/v4'
 import moment from 'moment'
 
+import '../../components-styles/modals/AddReceipt.scss'
+
 Modal.setAppElement('#root')
 
 class AddReceiptItem extends React.Component {
@@ -26,6 +28,7 @@ class AddReceiptItem extends React.Component {
 			time: undefined,
 			id: undefined,
 			shops: [],
+			shopsMessage: "Hmmm, looks like you don't have any shops yet. Go to the 'categories' tab and add one in order to create a record",
 			errorMessage: ''
 		}
 	}
@@ -83,19 +86,30 @@ class AddReceiptItem extends React.Component {
 
 	render() {
 		return (
-			<Modal {...this.props} >
-				<p>{this.state.errorMessage}</p>
+			<Modal {...this.props} className='addReceiptModal' >
+				<p id='addReceiptError'>{this.state.errorMessage}</p>
 					
-				<label htmlFor='shop'>shop</label>
-				<Select onChange={this.handleShopChange} options={this.state.shops} /><br />
-
-				<label htmlFor='date'>date</label>
-				<input ref={this.refDate} type='date' id='date' onChange={this.handleChange} value={this.state.value} /><br />
-
-				<label htmlFor='time'>time</label>
-				<input ref={this.refTime} type='time' id='time' onChange={this.handleChange} value={this.state.value} /><button onClick={this.handleNow}>NOW</button><br />
-
-				<button onClick={this.handleAddReceiptItem}>ADD</button>
+				
+				<div id='addReceiptForm'>
+					<div>
+						<label htmlFor='shop'>shop</label>
+						<Select onChange={this.handleShopChange} options={this.state.shops} /><br />
+					</div>	
+					
+					<div>
+						<label htmlFor='date'>date</label>
+						<input ref={this.refDate} type='date' id='date' onChange={this.handleChange} value={this.state.value} /><br />
+					</div>	
+					
+					<div>
+						<label htmlFor='time'>time</label>
+						<input ref={this.refTime} type='time' id='time' onChange={this.handleChange} value={this.state.value} /><button class='btn btnBlue' onClick={this.handleNow}>NOW</button><br />
+					</div>	
+					
+					<div id='addReceiptShopMessage'>
+						{ this.state.shops.length > 0 ? <button className='btn btnBlue' onClick={this.handleAddReceiptItem}>ADD</button> : this.state.shopsMessage }
+					</div>
+				</div>
 			</Modal>
 		)
 	}

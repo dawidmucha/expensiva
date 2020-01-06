@@ -66,7 +66,7 @@ class Shops extends React.Component {
 	}
 
 	async handleRemove(shop) {
-		await database.ref(`${store.getState().uid}/shops${shop}`).remove()
+		await database.ref(`${store.getState().uid}/shops/${shop}`).remove()
 		this.fetchShops()
 	}
 
@@ -116,7 +116,7 @@ class Shops extends React.Component {
 					<input ref={this.textRef} id='shop' type='text' value={this.state.value} onChange={this.handleChange} />
 					<input ref={this.imageRef} id='image' type='file' onChange={this.handleFiles} />
 					<img src={this.state.src} alt='shop logo preview' />
-					<button class='btn btnBlue' onClick={this.addShop}>ADD</button>
+					<button className='btn btnBlue' onClick={this.addShop}>ADD</button>
 				</div>
 			</div>
 		)
