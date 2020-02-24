@@ -1,7 +1,7 @@
 @import '../../variables.scss';
 
 .addReceiptItemContainer {
-	padding: 1rem;
+	padding: 0.2rem;
 	display: grid;
 	grid-template-columns: 30% 50% 10% 10%;
 
@@ -32,5 +32,20 @@
 	.label {
 		text-align: right;
 		padding-right: 0.3rem;
+	}
+
+	@media (max-width: 768px) {
+		width: 95vw;
+		grid-template-columns: 25% 35% 20% 20%;
+
+		.addReceiptItemNameInput, .addReceiptItemUnitsInput, .addReceiptItemPriceInput, .addReceiptItemAmountInput, .addReceiptItemDiscountCheckbox, .addReceiptItemCategorySelect, .addReceiptItemSubcatSelect {
+			padding: 0.6rem;
+		}
+
+		.addReceiptItemButton {
+			padding: 1rem;
+			width: 50%;
+			margin: 0.8rem auto;
+		}
 	}
 }

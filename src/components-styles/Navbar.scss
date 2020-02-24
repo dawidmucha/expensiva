@@ -30,4 +30,10 @@
 		height: 100%;
 		border-radius: 0.3rem 0 0 0.3rem;
 	}
+
+	@media (max-width: 768px) {
+		#divNavbarFlexed * {
+			font-size: 0.8rem;
+		}
+	}
 }

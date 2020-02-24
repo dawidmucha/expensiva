@@ -35,7 +35,6 @@
 			-webkit-appearance: none;
 			color: $black;
 			font-size: 18px;
-			border:1px solid $black;
 			border-radius: 0.3rem;
 			background: $white;
 			padding:5px;
@@ -56,12 +55,21 @@
 			-webkit-appearance: none;
 			color: $black;
 			font-size: 18px;
-			border:1px solid $black;
 			border-radius: 0.3rem;
 			background: $white;
 			padding:5px;
 			display: inline-block !important;
 			visibility: visible !important;
+
+			& + button { /* now button */
+				display: block;
+				margin: 0.4rem 0rem 0rem auto;
+				padding: 0.8rem;
+			}
 		}
+	}
+
+	@media (max-width: 768px) {
+		width: 100vw;
 	}
 }

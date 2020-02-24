@@ -7,9 +7,8 @@
 	width: 80vw;
 	margin: 0 auto;
 	background-color: $main;
-	border: 3px solid $black;
 	margin: 0.3rem auto;
-	border-radius: 2rem;
+	border-radius: 0.4rem;
 
 	h1 {
 		font-size: 2rem;
@@ -60,5 +59,31 @@
 		border-radius: 0.3rem;
 		margin: 0.3rem;
 		margin-bottom: 2rem;
+	}
+
+	@media (max-width: 768px) {
+		margin: 0rem;
+		width: 100vw;
+
+		ul {
+			margin: 0.4rem;
+
+			li {
+				padding: 0.6rem;
+			}
+		}
+
+		* .input {
+			width: 100%;
+			margin: 0rem auto;
+			margin-bottom: 0.6rem;
+			padding: 0.8rem 0;
+		}
+
+		.btnBlue {
+			padding: 0.8rem;
+			display: block;
+			margin: 0 auto;
+		}
 	}
 }

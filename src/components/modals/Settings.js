@@ -152,9 +152,12 @@ class Settings extends React.Component {
 	}
 
 	handleCurrencyChange(e) {
+		console.log(e)
 		this.setState({ currency: {label: e.label, value: e.value} })
 	}
+
 	handleDateFormatChange(e) {
+		console.log(e)
 		this.setState({ dateFormat: {label: e.value, value: e.value} })
 	}
 
@@ -213,9 +216,9 @@ class Settings extends React.Component {
 	}
 
 	saveChanges() {
-		database.ref(`${store.getState().uid}/settings/`).set({
-			currency: this.state.currency || null, 
-			dateFormat: this.state.dateFormat || null, 
+			database.ref(`${store.getState().uid}/settings/`).set({
+			currency: (typeof(this.state.currency.value) === 'object' ? this.state.currency.value : this.state.currency) || null, 
+			dateFormat: (typeof(this.state.dateFormat.value) === 'object' ? this.state.dateFormat.value : this.state.dateFormat) || null, 
 			weight: this.state.weight || null, 
 			volume: this.state.volume || null, 
 			timeSystem: this.state.timeSystem || null,
@@ -223,42 +226,11 @@ class Settings extends React.Component {
 			affix: this.state.affix || null
 		})
 		this.setState({ status: 'settings saved!' })
-
-		// firebase.auth().onAuthStateChanged(async (user) => {
-		// 	if (user) {
-		// 		if(this.refUsername.current.value) {
-		// 			await user.updateProfile({
-		// 				displayName: this.refUsername.current.value
-		// 			}).then(() => console.log('username updated!'))
-		// 		}
-
-		// 		if(this.refEmail.current.value){
-		// 			await user.updateEmail(this.refEmail.current.value).then(() => console.log('email updated'))
-		// 		}
-
-		// 		if(this.refPassword.current.value){
-		// 			await user.updatePassword(this.refPassword.current.value).then(() => console.log('password updated'))
-		// 		}
-
-		// 		console.log(user.displayName, user.email)
-		// 	}
-		// })
 	}
-
 
 	render() {
 		return (
 			<Modal {...this.props} id='settingsContainer'>
-				{/* <h3>change personal informaiton</h3>
-					
-				<div>username:</div>
-				<input ref={this.refUsername} type="text" onChange={this.handleCredentials}/>
-				
-				<div>email:</div>
-				<input ref={this.refEmail} type="text" onChange={this.handleCredentials}/>
-				
-				<div>password:</div>
-				<input ref={this.refPassword} type="password" onChange={this.handleCredentials}/>  */}
 				
 				<h1>SETTINGS</h1>
 				

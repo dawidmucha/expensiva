@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
-$main: #50C346;
-$green: #1C9C1F;
-$green-dark: #007700;
-$grey: #A2AF9F;
-$grey-dark: #3F4A3C;
-$blue: #52B6FF;
-$blue-dark: #3E89C7;
-$red: #FF5491;
-$red-dark: #DD4949;
+$main: #70ce67;
+$green: #45ae47;
+$green-dark: #2e902e85;
+$grey: #b3bdb0;
+$grey-dark: #626b5f;
+$blue: #71c3ff;
+$blue-dark: #619ed1;
+$red: #ff73a5;
+$red-dark: #e36a6a;
 
 $white: #eeeeee;
 $black: #111111;
 
-$font: 'Varela Round', sans-serif;
+$font: 'Ubuntu', sans-serif;
 
 $x: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAjklEQVRIx7WWSw7AIAhEwd7/yE27MU0TRX4zbmF4BR2tXiKPzHWLqIDWv+6wAijAAkGAdnq1ApXRWXXUS+gCvk66IE+nWUElX6vCTF75CzMdH+dtFcqOtLSpGUAI4oEipw/iAwiE3gliT8Yp2PFLqBO6T+iOp99d9FuY/p7QX0YU4ARafNL9Ldrph5eAAL2J8U8l/kd/AAAAAABJRU5ErkJggg==');
 
@@ -37,7 +37,7 @@ input[type='text'], input[type='number'] {
 	display: inline;
 	padding: 0.2rem;
 	border: 1.5px solid;
-	border-radius: 0.5rem;
+	border-radius: 0.2rem;
 	margin-right: 1rem;
 	cursor: pointer;
 }
@@ -78,6 +78,6 @@ input[type='text'], input[type='number'] {
 		margin: auto;
 		background-color: $green !important;
 		border-color: $black !important;
-		border-radius: 1rem !important;
+		border-radius: 0.2rem !important;
 	}
 }
