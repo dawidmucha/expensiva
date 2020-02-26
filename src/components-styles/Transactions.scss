@@ -5,6 +5,10 @@
 	padding: 2rem;
 	list-style-type: none;
 
+	.liNoRecords {
+		color: $white;
+	}
+
 	.liTransactions {
 		background-color: $main;
 		border-radius: 0.3rem;

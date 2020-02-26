@@ -279,9 +279,6 @@ class Settings extends React.Component {
 					<div id='settingsButtonClose'>
 						<button className='btn btnRed' onClick={this.props.close}>CLOSE</button>
 					</div>
-					<div id='settingsButtonExportData'>
-						<button className='btn btnBlue' onClick={this.handleDataExport}>EXPORT DATA</button>
-					</div>	
 				</div>
 
 			</Modal>

@@ -46,7 +46,7 @@ class Transactions extends React.Component {
 
 	render() {
 		const noRecords = (
-				<li>
+				<li className='liNoRecords'>
 					<h1 id='noRecordsTitle'>Currently no records</h1>
 					<h2 id='noRecordsSubtitle'>Start by clicking on the red circle in the bottom right!</h2>
 				</li>
