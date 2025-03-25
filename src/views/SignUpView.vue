@@ -1,3 +1,17 @@
+<script setup>
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth0 } from '@auth0/auth0-vue'
+
+const { user } = useAuth0()
+
+const router = useRouter()
+
+onMounted(() => {
+  if (user.value != undefined) router.push('/dashboard')
+})
+</script>
+
 <template>
   <div>signup view</div>
 </template>
