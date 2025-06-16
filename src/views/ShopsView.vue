@@ -9,7 +9,7 @@ const { user } = useAuth0()
 const router = useRouter()
 
 onMounted(() => {
-  if (user.value == undefined) router.push('/login')
+  if (user.value == undefined) router.push('/')
 })
 </script>
 

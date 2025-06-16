@@ -9,9 +9,8 @@ const { isAuthenticated, user, isLoading } = useAuth0()
   <div>
     <div v-if="isLoading">Loading...</div>
     <div v-if="isAuthenticated">hello {{ user }}!</div>
+
     <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/login">Log in</RouterLink>
-    <RouterLink to="/signup">Sign up</RouterLink>
     <RouterLink to="/dashboard">Dashboard</RouterLink>
     <RouterLink to="/shops">Shops</RouterLink>
     <RouterLink to="/categories">Categories</RouterLink>

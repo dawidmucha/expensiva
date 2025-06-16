@@ -5,6 +5,10 @@
   Inter - text
 */
 
+body {
+  margin: 0;
+}
+
 :root {
   --c-black: #050505;
   --c-offBlack: #5f5f5f;
@@ -28,6 +32,11 @@ h5,
 h6 {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
+  text-align: center;
+}
+
+button {
+  padding: 0.6rem;
   text-align: center;
 }
 

@@ -10,7 +10,7 @@ const router = useRouter()
 const { logout } = useAuth0()
 
 onMounted(() => {
-  if (user.value == undefined) router.push('/login')
+  if (user.value == undefined) router.push('/')
 })
 </script>
 

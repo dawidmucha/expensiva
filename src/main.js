@@ -14,7 +14,7 @@ app.use(
     domain: 'dev-jss3a55q8a50osst.us.auth0.com',
     clientId: 'xfS3sqK53VDh2daOijUxJamaVyOnJ9wH',
     authorizationParams: {
-      redirect_uri: window.location.origin,
+      redirect_uri: 'http://localhost:5173/auth',
     },
   }),
 )
