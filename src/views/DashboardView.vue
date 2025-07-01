@@ -6,17 +6,20 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth0 } from '@auth0/auth0-vue'
 
-const { user, isAuthenticated, isLoading } = useAuth0()
-
+const { user } = useAuth0()
 const router = useRouter()
 
-const getUser = async (id) => {
-  await axios({
-    method: 'get',
-    url: `http://localhost:8081/user?id=${id}`,
-  }).then((res) => {
-    return res.results
-  })
+const addReceipt = () => {
+  axios
+    .post('http://localhost:8081/receipt', {
+      userId: user.value.sub,
+    })
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 onMounted(async () => {
@@ -28,7 +31,7 @@ onMounted(async () => {
   <SideBar />
   <div id="dashboardView">
     <div>dashboard view</div>
-    <div></div>
+    <button @click="addReceipt">add receipt</button>
   </div>
 </template>
 
