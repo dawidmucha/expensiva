@@ -12,13 +12,13 @@ const router = useRouter()
 const receipts = ref([])
 
 const addReceipt = () => {
-  console.log('addsub?', user.value.sub)
   axios
     .post('http://localhost:8081/receipt', {
       userId: user.value.sub,
     })
     .then((res) => {
       console.log(res)
+      getReceipts()
     })
     .catch((err) => {
       console.log(err)
@@ -26,7 +26,6 @@ const addReceipt = () => {
 }
 
 const getReceipts = () => {
-  console.log('getsub?', user.value.sub)
   axios
     .put('http://localhost:8081/receipt', {
       userId: user.value.sub,
@@ -34,6 +33,23 @@ const getReceipts = () => {
     .then((res) => {
       console.log('ee', res.data.results)
       receipts.value = res.data.results
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+const removeReceipt = (receiptId) => {
+  axios
+    .delete('http://localhost:8081/receipt', {
+      data: {
+        userId: user.value.sub,
+        receiptId,
+      },
+    })
+    .then((res) => {
+      console.log('remove', res.data.results)
+      getReceipts()
     })
     .catch((err) => {
       console.log(err)
@@ -52,7 +68,16 @@ onMounted(async () => {
   <div id="dashboardView">
     <div>dashboard view</div>
     <h6>receipts:</h6>
-    <div>{{ receipts }}</div>
+    <table>
+      <tr v-for="receipt in receipts" :key="receipt.id">
+        <td :style="{ border: '1px solid black' }">
+          <div>
+            {{ receipt.id }} ({{ receipt.date }}) @ {{ receipt.created_at }}
+            <button @click="removeReceipt(receipt.id)">X</button>
+          </div>
+        </td>
+      </tr>
+    </table>
     <button @click="addReceipt">add receipt</button>
     <button @click="getReceipts">get receipt</button>
   </div>
