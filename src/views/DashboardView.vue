@@ -56,6 +56,22 @@ const removeReceipt = (receiptId) => {
     })
 }
 
+const getShop = async (shopId) => {
+  const res = await axios.put('http://localhost:8081/shop', {
+    shopId,
+  })
+  // .then((res) => {
+  //   // console.log(res.data.results[0][0].name)
+  //   return res.data.results[0][0].name
+  // })
+  // .catch((err) => {
+  //   console.log(err)
+  // })
+
+  console.log('returning', res.data.results[0][0].name)
+  return await res.data.results[0][0].name
+}
+
 const getUserShops = () => {
   axios
     .put('http://localhost:8081/shops', {
@@ -122,7 +138,8 @@ onMounted(async () => {
         </td>
         <td v-else :style="{ border: '1px solid black' }">
           <div>
-            {{ receipt.id }} ({{ receipt.date }}) | {{ receipt.shop_id }}
+            {{ receipt.id }} ({{ receipt.date }}) |
+            {{ receipt.name }}
             <button @click="removeReceipt(receipt.id)">X</button>
             <button @click="selectReceipt(receipt.id)">edit</button>
           </div>
@@ -133,6 +150,7 @@ onMounted(async () => {
     <button @click="addReceipt">add receipt</button>
     <button @click="getReceipts">get receipt</button>
     <button @click="getUserShops">get shops</button>
+    <button @click="getShop(4)">get shop name</button>
   </div>
 </template>
 
